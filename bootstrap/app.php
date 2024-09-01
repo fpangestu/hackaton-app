@@ -3,6 +3,9 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use App\Http\Middleware\CorsMiddleware;
+
+require_once __DIR__.'/../vendor/autoload.php';
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -11,7 +14,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        // $middleware->validateCsrfTokens(except: [
+        //     env('APP_URL') . '/researchjspost'
+        // ]);
+        $middleware->append(CorsMiddleware::class); // Register Cors middleware
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
